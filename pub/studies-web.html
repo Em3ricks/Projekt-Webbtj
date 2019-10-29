@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mina studier</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="studies-web-wrapper">
+        <nav class="navigation">
+            <ul>
+                <a href="studies-web.html">
+                    <li>Mina Studier</li>
+                </a>
+                <a href="websites-web.html">
+                    <li>Mina Hemsidor</li>
+                </a>
+                <a href="work-web.html">
+                    <li>Arbetserfarenhet</li>
+                </a>
+
+            </ul>
+        </nav>
+
+        <div class="value_container_web">
+            <!--- Värden skrivs till denna div --->
+            <ul id="value_list"></ul>
+        </div>
+    </div>
+
+</body>
+<script>
+    window.onload = getData(); // När webbläsaren laddas startar funktionen getData
+
+    //_______________________________________________________ READ _______________________________________________________
+    const value_list_El = document.getElementById("value_list"); // Kopplar UL till en variabel
+    async function getData() { // Funktion innehållande fetchanrop för att läsa värden från databas
+        fetch("http://studenter.miun.se/~joem1800/writeable/projekt/API/studies/functions/read.php") // Hämtar funktion från API
+            .then(function (response) {
+                if (response.status !== 200) { //felmeddelande ifall det sker problem vid anslutning
+                    console.log("Error when reading file. Status code: " + response.status);
+                    return;
+                }
+                response.json()
+                    .then(function (table) { // JSON-konvertering av svar 
+                        displayValues(table
+                            .values); //Smalnar av array till child-värden och lagrar i ny funktion
+                    });
+            })
+            .catch(function (err) {
+                console.log("fetch error", err);
+            });
+    }
+
+    function displayValues(values) { // Funktion för att skriva ut värden hämtade av getData
+        value_list_El.innerHTML = ""; // Nollställer lista
+        values.forEach((item) => { //Loopar igenom array och skriver ut värden från databas
+            const id = item["id"];
+            value_list_El.innerHTML += // Skriver ut enskilda värden enligt önskad struktur
+                "<div class='displayed-values-web'>" +
+                "<li><b class='titels'>Lärosäte </b>" + item["kolumn_1"] + "</li><hr>" +
+                "<li><b class='titels'>Kursnamn </b>" + item["kolumn_2"] + "</li><hr>" +
+                "<li><b class='titels'>Läsperiod </b>" + item["kolumn_3"] + "</li><hr>" +
+                "<br></div>";
+        });
+    } //_______________________________________________________ END OF READ _______________________________________________________
+</script>
+
+</html>

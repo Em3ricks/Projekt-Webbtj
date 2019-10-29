@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mina Hemsidor</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+    <main>
+        <header>
+            <ul id="main-nav">
+                <li><a href="studies.html">STUDIER</a></li>
+                <li><a href="websites.html">HEMSIDOR</a></li>
+                <li><a href="work.html">ARBETE</a></li>
+            </ul>
+        </header>
+
+        <div class="form-wrapper">
+            <div class="form">
+                <!--- Formulär för att lägga till värden --->
+                <form id="form">
+                    <h2>Lägg till värden</h2> <br>
+                    Webbplatsens namn: <br> <input type="text" id="kolumn_1" class="form-input"> <br>
+                    URL: <br> <input type="text" id="kolumn_2" class="form-input"> <br>
+                    Beskrivning: <br> <input type="text" id="kolumn_3" class="form-input"> <br>
+                    <!----- Vid knapptryckning körs funktionen addValues ----->
+                    <button onclick='addValues()' class="btn">Lägg till</button>
+                </form>
+            </div>
+
+            <div class="form">
+                <!--- Formulär för att lägga till värden --->
+                <form id="update-form">
+                    <h2>Uppdatera värden</h2> <br>
+                    ID: <br> <input type="number" id="kolumn_id_update" class="form-input"> <br>
+                    Webbplatsens namn: <br> <input type="text" id="kolumn_1_update" class="form-input"> <br>
+                    URL: <br> <input type="text" id="kolumn_2_update" class="form-input"> <br>
+                    Beskrivning: <br> <input type="text" id="kolumn_3_update" class="form-input"> <br>
+                    <!----- Vid knapptryckning körs funktionen addValues ----->
+                    <button onclick='updateValues()' class="btn">Uppdatera</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="value_container">
+            <!--- Värden skrivs till denna div --->
+            <h2>Utskrift av databas</h2> <br>
+            <ul id="value_list"></ul>
+        </div>
+
+    </main>
+</body>
+<script>
+    window.onload = getData(); // När webbläsaren laddas startar funktionen getData
+    //_______________________________________________________ UPDATE _______________________________________________________
+    async function updateValues() { // Lagrar HTML-formulärets olika inputs i variabler
+        let kolumn_id_update = document.getElementById("kolumn_id_update").value;
+        let kolumn_1_update = document.getElementById("kolumn_1_update").value;
+        let kolumn_2_update = document.getElementById("kolumn_2_update").value;
+        let kolumn_3_update = document.getElementById("kolumn_3_update").value;
+        let jsonUpdateStr = JSON.stringify( // Konverterar objektvärden till en JSON-sträng och lagrar i variabel
+            {
+                "id": kolumn_id_update,
+                "kolumn_1": kolumn_1_update,
+                "kolumn_2": kolumn_2_update,
+                "kolumn_3": kolumn_3_update
+            });
+        fetch("http://studenter.miun.se/~joem1800/writeable/projekt/API/websites/functions/update.php", { // Hämtar funktion för att lägga till nya värden från tidigare skapat API
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: jsonUpdateStr
+            })
+            // Magi sker
+            .then((res) => res.json())
+            .then((data) => {
+                getData(); // Kallar på funktionen getData så att webbläsaren uppdateras när nya värden läggs till
+            })
+            .catch((err) => console.log(err));
+    } //_______________________________________________________ END OF UPDATE _______________________________________________________
+
+    //_______________________________________________________ DELETE _______________________________________________________
+    async function remove(id) {
+        let json = JSON.stringify( // Konverterar objektvärden till en JSON-sträng och lagrar i variabel
+            {
+                "id": id
+            });
+        fetch("http://studenter.miun.se/~joem1800/writeable/projekt/API/websites/functions/delete.php", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: json
+            }) // Magi sker
+            .then((res) => res.json())
+            .then((data) => {
+                getData(); // Kallar på funktionen getData så att webbläsaren uppdateras när nya värden läggs till
+            })
+            .catch((err) => console.log(err));
+    }
+    //_______________________________________________________ END OF DELETE _______________________________________________________
+
+    //_______________________________________________________ CREATE _______________________________________________________
+    async function addValues() { // Lagrar HTML-formulärets olika inputs i variabler
+        let kolumn_1 = document.getElementById("kolumn_1").value;
+        let kolumn_2 = document.getElementById("kolumn_2").value;
+        let kolumn_3 = document.getElementById("kolumn_3").value;
+        let jsonStr = JSON.stringify( // Konverterar objektvärden till en JSON-sträng och lagrar i variabel
+            {
+                "kolumn_1": kolumn_1,
+                "kolumn_2": kolumn_2,
+                "kolumn_3": kolumn_3
+            });
+        fetch("http://studenter.miun.se/~joem1800/writeable/projekt/API/websites/functions/create.php", { // Hämtar funktion för att lägga till nya värden från tidigare skapat API
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: jsonStr
+            })
+            // Magi sker 
+            .then((res) => res.json())
+            .then((data) => {
+                getData(); // Kallar på funktionen getData så att webbläsaren uppdateras när nya värden läggs till
+            })
+            .catch((err) => console.log(err));
+    } //_______________________________________________________ END OF CREATE _______________________________________________________
+
+    //_______________________________________________________ READ _______________________________________________________
+    const value_list_El = document.getElementById("value_list"); // Kopplar UL till en variabel
+    async function getData() { // Funktion innehållande fetchanrop för att läsa värden från databas
+        fetch("http://studenter.miun.se/~joem1800/writeable/projekt/API/websites/functions/read.php") // Hämtar funktion från API
+            .then(function (response) {
+                if (response.status !== 200) { //felmeddelande ifall det sker problem vid anslutning
+                    console.log("Error when reading file. Status code: " + response.status);
+                    return;
+                }
+                response.json()
+                    .then(function (table) { // JSON-konvertering av svar 
+                        displayValues(table
+                            .values); //Smalnar av array till child-värden och lagrar i ny funktion
+                        remove(table.values.id); // Skickar ID till funktion för delete
+                    });
+            })
+            .catch(function (err) {
+                console.log("fetch error", err);
+            });
+    }
+
+    function displayValues(values) { // Funktion för att skriva ut värden hämtade av getData
+        value_list_El.innerHTML = ""; // Nollställer lista
+        values.forEach((item) => { //Loopar igenom array och skriver ut värden från databas
+            const id = item["id"];
+            value_list_El.innerHTML += // Skriver ut enskilda värden enligt önskad struktur
+                "<div class='displayed-values'><h3>" +
+                "<li>" + item["kolumn_1"] + "</li></h3><br>" +
+                "<li>ID: " + id + "</li><br>" +
+                "<button onclick='remove(" + id + ")' class=btn>ta bort</button>" +
+                "</div>";
+        });
+    } //_______________________________________________________ END OF READ _______________________________________________________
+</script>
+
+</html>
