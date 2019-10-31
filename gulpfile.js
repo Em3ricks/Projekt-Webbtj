@@ -68,3 +68,6 @@ function sassConvert() { // Task: Konvertera sass/scss till css
 exports.default = series( // Huvudkommandot 'Gulp' sätter igång samtliga funktioner
     parallel(copyHTML, copyMedia, jsTask, cssCombine, sassConvert), watchTask);
 
+
+
+    

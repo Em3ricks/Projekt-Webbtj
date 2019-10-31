@@ -40,7 +40,7 @@
     //_______________________________________________________ READ _______________________________________________________
     const value_list_El = document.getElementById("value_list"); // Kopplar UL till en variabel
     async function getData() { // Funktion innehållande fetchanrop för att läsa värden från databas
-        fetch("http://studenter.miun.se/~joem1800/writeable/projekt/API/studies/functions/read.php") // Hämtar funktion från API
+        fetch("http://localhost/Projekt/api/studies/functions/read.php") // Hämtar funktion från API
             .then(function (response) {
                 if (response.status !== 200) { //felmeddelande ifall det sker problem vid anslutning
                     console.log("Error when reading file. Status code: " + response.status);

@@ -24,9 +24,9 @@
                 <!--- Formulär för att lägga till värden --->
                 <form id="form">
                     <h2>Lägg till värden</h2> <br>
-                    Webbplatsens namn: <br> <input type="text" id="kolumn_1" class="form-input"> <br>
-                    URL: <br> <input type="text" id="kolumn_2" class="form-input"> <br>
-                    Beskrivning: <br> <input type="text" id="kolumn_3" class="form-input"> <br>
+                    Webbplatsens namn: <br> <input type="text" id="kolumn_1" class="form-input" required> <br>
+                    URL: <br> <input type="text" id="kolumn_2" class="form-input" required> <br>
+                    Beskrivning: <br> <input type="text" id="kolumn_3" class="form-input" required> <br>
                     <!----- Vid knapptryckning körs funktionen addValues ----->
                     <button onclick='addValues()' class="btn">Lägg till</button>
                 </form>
@@ -36,7 +36,7 @@
                 <!--- Formulär för att lägga till värden --->
                 <form id="update-form">
                     <h2>Uppdatera värden</h2> <br>
-                    ID: <br> <input type="number" id="kolumn_id_update" class="form-input"> <br>
+                    ID: <br> <input type="number" id="kolumn_id_update" class="form-input" required> <br>
                     Webbplatsens namn: <br> <input type="text" id="kolumn_1_update" class="form-input"> <br>
                     URL: <br> <input type="text" id="kolumn_2_update" class="form-input"> <br>
                     Beskrivning: <br> <input type="text" id="kolumn_3_update" class="form-input"> <br>
@@ -55,7 +55,7 @@
     </main>
 </body>
 <script>
-    window.onload = getData(); // När webbläsaren laddas startar funktionen getData
+    window.onload = getData(),updateValues(), addValues(); // När webbläsaren laddas startar funktioner
     //_______________________________________________________ UPDATE _______________________________________________________
     async function updateValues() { // Lagrar HTML-formulärets olika inputs i variabler
         let kolumn_id_update = document.getElementById("kolumn_id_update").value;
@@ -69,7 +69,7 @@
                 "kolumn_2": kolumn_2_update,
                 "kolumn_3": kolumn_3_update
             });
-        fetch("http://studenter.miun.se/~joem1800/writeable/projekt/API/websites/functions/update.php", { // Hämtar funktion för att lägga till nya värden från tidigare skapat API
+        fetch("http://localhost/Projekt/api/websites/functions/update.php", { // Hämtar funktion för att lägga till nya värden från tidigare skapat API
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -90,7 +90,7 @@
             {
                 "id": id
             });
-        fetch("http://studenter.miun.se/~joem1800/writeable/projekt/API/websites/functions/delete.php", {
+        fetch("http://localhost/Projekt/api/websites/functions/delete.php", {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
@@ -116,7 +116,7 @@
                 "kolumn_2": kolumn_2,
                 "kolumn_3": kolumn_3
             });
-        fetch("http://studenter.miun.se/~joem1800/writeable/projekt/API/websites/functions/create.php", { // Hämtar funktion för att lägga till nya värden från tidigare skapat API
+        fetch("http://localhost/Projekt/api/websites/functions/create.php", { // Hämtar funktion för att lägga till nya värden från tidigare skapat API
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -134,7 +134,7 @@
     //_______________________________________________________ READ _______________________________________________________
     const value_list_El = document.getElementById("value_list"); // Kopplar UL till en variabel
     async function getData() { // Funktion innehållande fetchanrop för att läsa värden från databas
-        fetch("http://studenter.miun.se/~joem1800/writeable/projekt/API/websites/functions/read.php") // Hämtar funktion från API
+        fetch("http://localhost/Projekt/api/websites/functions/read.php") // Hämtar funktion från API
             .then(function (response) {
                 if (response.status !== 200) { //felmeddelande ifall det sker problem vid anslutning
                     console.log("Error when reading file. Status code: " + response.status);

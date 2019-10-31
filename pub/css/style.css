@@ -25,6 +25,25 @@ main {
 .btn {
   padding: .5em; }
 
+.btn {
+  width: 130px;
+  height: 40px;
+  font-size: 14px;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s all; }
+
+.btn:hover {
+  color: black;
+  background: white;
+  width: 150px;
+  height: 40px;
+  border-radius: 18px;
+  opacity: 0.85; }
+
 .form {
   padding: 2em;
   margin: 0 auto;
@@ -60,6 +79,13 @@ h2 {
   margin-top: -1em;
   opacity: .8; }
 
+#form,
+#update-form {
+  color: floralwhite; }
+
+input {
+  margin-top: 10px; }
+
 .value_container {
   text-align: center; }
 
@@ -84,6 +110,22 @@ h2 {
   text-align: center;
   border-radius: 25px; }
 
+.displayed-values-web {
+  width: 55%;
+  height: auto;
+  font-size: 14pt;
+  background-color: white;
+  margin: 1em;
+  padding: 1em;
+  text-align: right; }
+
+.displayed-values-web li {
+  margin-bottom: 10px;
+  margin-top: 10px; }
+
+.titels {
+  float: left; }
+
 #main-nav {
   display: inline-flex;
   margin-top: 3em;
@@ -105,48 +147,6 @@ h2 {
 #main-nav li a:hover {
   color: deeppink;
   font-weight: bold; }
-
-.btn {
-  width: 130px;
-  height: 40px;
-  font-size: 14px;
-  background: rgba(0, 0, 0, 0.7);
-  border: none;
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s all; }
-
-.btn:hover {
-  color: black;
-  background: white;
-  width: 150px;
-  height: 40px;
-  border-radius: 18px;
-  opacity: 0.85; }
-
-#form,
-#update-form {
-  color: floralwhite; }
-
-input {
-  margin-top: 10px; }
-
-.displayed-values-web {
-  width: 55%;
-  height: auto;
-  font-size: 14pt;
-  background-color: white;
-  margin: 1em;
-  padding: 1em;
-  text-align: right; }
-
-.displayed-values-web li {
-  margin-bottom: 10px;
-  margin-top: 10px; }
-
-.titels {
-  float: left; }
 
 .navigation {
   width: 35%;
