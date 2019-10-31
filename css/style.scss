@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+//Mixin för en gradient
+@mixin radial-gradient($from, $to) {
+  background: -moz-radial-gradient(center, circle cover, $from 0%, $to 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, $from), color-stop(100%, $to));
+  background: -webkit-radial-gradient(center, circle cover, $from 0%, $to 100%);
+  background: -o-radial-gradient(center, circle cover, $from 0%, $to 100%);
+  background: -ms-radial-gradient(center, circle cover, $from 0%, $to 100%);
+  background: radial-gradient(center, circle cover, $from 0%, $to 100%);
+  background-color: $from;
+}
+
+// Basinställningar
+* {
+  padding: 0;
+  margin: 0;
+  font-family: 'Muli', sans-serif;
+  list-style: none;
+}
+
+main {
+  margin: 0 auto;
+  @include radial-gradient(rgb(13, 126, 238), rgb(34, 1, 37));
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+// Styling av knappar
+.btn {
+  padding: .5em;
+}
+
+.btn {
+  width: 130px;
+  height: 40px;
+  font-size: 14px;
+  background: rgba(black, 0.7);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s all;
+}
+
+.btn:hover {
+  color: black;
+  background: white;
+  width: 150px;
+  height: 40px;
+  border-radius: 18px;
+  opacity: 0.85;
+}
+
+// Styling av formulär
+.form {
+  padding: 2em;
+  margin: 0 auto;
+  display: inline-flex;
+  width: 400px;
+}
+
+.form-input {
+  width: 400px;
+  padding: .3em;
+  margin-bottom: 1em;
+}
+
+.form-wrapper {
+  text-align: center;
+  width: 100%;
+  margin-top: 5em;
+}
+
+h2 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.radial {
+  @include radial-gradient(rgb(13, 126, 238), rgb(34, 1, 37));
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -999;
+  margin-top: -1em;
+  opacity: .8;
+}
+
+#form,
+#update-form {
+  color: floralwhite;
+}
+
+input {
+  margin-top: 10px;
+}
+
+// Styling av utskrivna värden 
+.value_container {
+  text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .value_container {
+    margin-top: 4em;
+  }
+}
+
+.displayed-values {
+  @include radial-gradient(rgb(238, 13, 152), rgb(139, 4, 110));
+  display: inline-block;
+  margin: 1em;
+  padding: .8em;
+  min-width: 15%;
+  max-width: 33%;
+  height: auto;
+  text-align: center;
+  border-radius: 25px;
+}
+
+.displayed-values-web {
+  width: 55%;
+  height: auto;
+  font-size: 14pt;
+  background-color: rgb(255, 255, 255);
+  margin: 1em;
+  padding: 1em;
+  text-align: right;
+}
+
+.displayed-values-web li {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.titels {
+  float: left;
+}
+
+// Styling av navigering
+#main-nav {
+  display: inline-flex;
+  margin-top: 3em;
+  position: absolute;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+#main-nav li {
+  margin: 1em;
+  padding: 1em;
+}
+
+#main-nav li a {
+  color: rgb(255, 255, 255);
+  font-size: 14pt;
+  transition: 0.3s all;
+  text-decoration: none;
+}
+
+#main-nav li a:hover {
+  color: deeppink;
+  font-weight: bold;
+}
+
+.navigation {
+  width: 35%;
+  float: right;
+  text-align: right;
+  padding: 1em;
+}
+
+.navigation li {
+  padding: 1em;
+  font-size: 16pt;
+}
+
+.navigation a {
+  text-decoration: none;
+  color: black;
+  transition: 0.3s all;
+}
+
+.navigation a:hover {
+  text-decoration: underline;
+}
+
+// Styling av webbtjänst
+.studies-web-wrapper {
+  @include radial-gradient(rgb(251, 255, 4),rgb(238, 122, 13));
+  overflow: hidden;
+}
+
+.websites-web-wrapper {
+  @include radial-gradient(rgb(21, 238, 13), rgb(2, 88, 20));
+  overflow: hidden;
+}
+
+.work-web-wrapper {
+  @include radial-gradient(rgb(85, 246, 233), rgb(6, 141, 146));
+  overflow: hidden;
+}
+
+.description {
+  text-align: left;
+}
+
